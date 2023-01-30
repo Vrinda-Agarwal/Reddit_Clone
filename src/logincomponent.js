@@ -1,24 +1,33 @@
 import React, { Component } from 'react'
 import { useNavigate} from 'react-router'
+import {useState} from 'react'
 import { useEffect } from 'react';
 // export default class Login extends Component {
 export default function Login() {
   // render() {
   const navigate = useNavigate();
+  const[username,updateUsername]=useState('');
+  const[password,updatePassword]=useState('');
+
+  const handleSubmit=Event=>{
+    console.log('username',username);
+    console.log('password',password);
+    // updateUsername('');
+    // updatePassword('');
+  }
+  
   useEffect(() => {
     console.log("Hello");
   }, []);
-  // const submit_function = (() => {
-  //   console.log("submitting");
-  //   <Navigate to="/profile"></Navigate>
-  // })
+
   return (
     <form onSubmit={(e) => {
+      handleSubmit();
       e.preventDefault();
       console.log("submitting");
-      // return <Navigate to="/profile" />;
       navigate("/profile");
-    }}>
+    }}
+    >
     
       <h3>
         Login
@@ -29,6 +38,7 @@ export default function Login() {
           type="text"
           className="form-control"
           placeholder="Enter Username"
+          onChange={event => updateUsername(event.target.value)}
         />
       </div>
       <div className="mb-3">
@@ -37,6 +47,7 @@ export default function Login() {
           type="password"
           className="form-control"
           placeholder="Enter password"
+          onChange={event => updatePassword(event.target.value)}
         />
       </div>
       {/* <div className="mb-3">
@@ -60,6 +71,7 @@ export default function Login() {
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
+        
         
       </div>
       {/* <p className="forgot-password text-right">
