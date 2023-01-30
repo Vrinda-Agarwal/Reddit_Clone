@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 // export default class Profile extends Component {
 export default function Profile() {
   const [open1,setOpen1]=useState(false);
   const [open2,setOpen2]=useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log("Hello");
+  }, []);
   return (
+
     <div class="container d-flex justify-content-center align-items-center">
 
       <div class="card">
@@ -82,6 +89,15 @@ export default function Profile() {
                     <li>Shruti</li>
                   </ul>
                 </div>}
+                <form onSubmit={(e) => {
+      e.preventDefault();
+      console.log("Hi");
+      // return <Navigate to="/profile" />;
+      navigate("/");
+    }}>
+            <button type="submit">LOGOUT</button> 
+            </form>
+              
               </div>
 
             </div>
