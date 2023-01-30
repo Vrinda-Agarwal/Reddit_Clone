@@ -75,3 +75,19 @@
 
         font-size: 29px;
        }
+       .dropdown-menu.active{
+              /* opacity:1;
+              visibility:visible;
+              transform:translateY(0);
+              transition:var(--speed)ease; */
+              display: block;
+               
+       }
+       .dropdown-menu.inactive{
+              /* opacity:0;
+              visibility:hidden;
+              transform:translateY(-20px);
+              transition:var(--speed)ease; */
+              display: none;
+              
+       }
