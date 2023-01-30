@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {useState} from 'react';
 // export default class Profile extends Component {
 export default function Profile() {
-  const [open,setOpen]=useState(false);
+  const [open1,setOpen1]=useState(false);
+  const [open2,setOpen2]=useState(false);
   return (
     <div class="container d-flex justify-content-center align-items-center">
 
@@ -52,37 +53,35 @@ export default function Profile() {
 
 
             <div class="stats">
-              {/* <h6 class="mb-0">Ranks</h6>
-              <span>129</span> */}
+              
               <div classname="Menu-container" >
                 <div className='Menu-trigger' >
-                  <button className="btn btn-primary" onClick={()=>{setOpen(!open); open?document.getElementById("abcd").style.display = "block" :document.getElementById("abcd").style.display = "none"}}>
+                  <button className="btn btn-primary" onClick={()=>{setOpen1(!open1)}}>
                     Followers
                   </button>
                 </div>
-                <div id = "abcd" >
+                {open1 && <div id = "abcd" >
                   <ul className="dropdown-menu.active" >
                     <li>Vrinda</li>
                     <li>Aryaveer</li>
                     <li>Shruti</li>
                     <li>Pawan</li>
                   </ul>
-                </div>
+                </div>}
               </div>
-              <div classname="Menu-container">
-                <div className='Menu-trigger'>
-                  <button className="btn btn-primary" onClick={()=>{setOpen(!open);open?document.getElementById("abc").style.display = "block" :document.getElementById("abc").style.display = "none"}}>
-                    Following
+              <div classname="Menu-container" >
+                <div className='Menu-trigger' >
+                  <button className="btn btn-primary" onClick={()=>{setOpen2(!open2)}}>
+                    Followings
                   </button>
                 </div>
-                <div  id="abc">
-                  <ul className="dropdown-menu.active">
+                {open2 && <div id = "abcd" >
+                  <ul className="dropdown-menu.active" >
                     <li>Vrinda</li>
                     <li>Aryaveer</li>
                     <li>Shruti</li>
-                    <li>Pawan</li>
                   </ul>
-                </div>
+                </div>}
               </div>
 
             </div>
