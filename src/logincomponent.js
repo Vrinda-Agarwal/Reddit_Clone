@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { useNavigate, Navigate } from 'react-router'
+import { useNavigate} from 'react-router'
 import { useEffect } from 'react';
 // export default class Login extends Component {
 export default function Login() {
   // render() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     console.log("Hello");
   }, []);
@@ -16,7 +16,8 @@ export default function Login() {
     <form onSubmit={(e) => {
       e.preventDefault();
       console.log("submitting");
-      return <Navigate to="/profile" />;
+      // return <Navigate to="/profile" />;
+      navigate("/profile");
     }}>
     
       <h3>
