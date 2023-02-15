@@ -11,7 +11,7 @@ export default function Profile() {
     console.log("Hello");
   }, []);
   return (
-
+    
     <div class="container d-flex justify-content-center align-items-center">
 
       <div class="card">
