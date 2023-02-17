@@ -1,21 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-function Navbar() {
+import './navbar.css'
+function NavBar() {
   return (
-    <nav>
+    <nav className="navbar navbar-expand-lg navbar-light fixed-top">
       <ul>
+        <li><span style={{color:"black"}}>GREDDIT</span></li>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/profile">Profile</Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/mySubGreddits">My SubGreddits</Link>
         </li>
         <li>
-          <Link to="/contact">Contact</Link>
+          <Link to="/subGreddits">SubGreddits</Link>
+        </li>
+        <li>
+            <Link to="/savedPosts">Saved Posts</Link>
         </li>
       </ul>
     </nav>
   );
 }
 
-export default Navbar;
+export default NavBar;

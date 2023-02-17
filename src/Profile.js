@@ -2,16 +2,44 @@ import React, { Component } from 'react';
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import NavBar from './navbar';
 // export default class Profile extends Component {
 export default function Profile() {
   const [open1,setOpen1]=useState(false);
   const [open2,setOpen2]=useState(false);
+  const [userData,setUserdata]=useState('');
+  
   const navigate = useNavigate();
   useEffect(() => {
     console.log("Hello");
+    const user = JSON.parse(localStorage.getItem('Uname'));
+    console.log(user);
+    setUserdata(user);
+    fetch("http://localhost:3001/getuserdata", {
+          method: "POST",
+          crossDomain: "True",
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            "Access-Control-Allow-Origin": "*"
+          },
+        body: JSON.stringify(user)
+        }).then((res) => {
+          res.json().then((data) => {
+            console.log(data);
+            console.log(userData);
+          })
+        });
+    // username post karo
+    // wahan se response mei profile details bhejo
+    // backend
+    // userData se Usernamedb.findOne function hota hai
+    // find karke res.send karo
   }, []);
   return (
-    
+    <>
+    <NavBar/>
+
     <div class="container d-flex justify-content-center align-items-center">
 
       <div class="card">
@@ -37,8 +65,8 @@ export default function Profile() {
 
         <div class="mt-5 text-center">
 
-          <h4 class="mb-0">Benjamin Tims</h4>
-          <span class="text-muted d-block mb-2">Los Angles</span>
+          <h4 class="mb-0">{userData.username}</h4>
+          <span class="text-muted d-block mb-2">Los Angeles</span>
 
           {/* <button class="btn btn-primary btn-sm follow">Follow</button> */}
 
@@ -109,6 +137,7 @@ export default function Profile() {
       </div>
 
     </div>
+    </>
   )
 
 }
@@ -117,5 +146,5 @@ export default function Profile() {
 //     <li className='dropdownitem'>
        
 //     </li>  
-//   );
+//   )
 // }

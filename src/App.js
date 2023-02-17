@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useState } from 'react'
 import Login from './logincomponent.js'
 import SignUp from './signupcomponent.js'
-import Profile from "./Profile.js"
+import Profile from './Profile.js'
+import NavBar from './navbar.js'
 // import './user_profie.css'
 
 function App() {
@@ -13,43 +14,14 @@ function App() {
   console.log(flag)
   return (
     <Router>
-      <div className="App">
-        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-          <div className="container">
-            <Link className="navbar-brand" to={'/sign-in'}>
-              GREDDIT
-            </Link>
-            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <button className="nav-link" 
-                  onClick={()=>{setflag(0)}}
-                  >
-                    Login
-                  </button >
-                </li>
-                <li className="nav-item">
-                  <button className="nav-link" 
-                  onClick={()=>{setflag(1)}}
-                  >
-                    Sign up
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <div className="auth-wrapper">
-          <div className="auth-inner">
+      
             <Routes>
-              <Route path="/" element={(flag===0) ? (<Login />):(<SignUp />)} />
+              <Route path="/" element={(flag===0) ? (<Login setflag={setflag}/>):(<SignUp setflag={setflag}/>)} />
               {/* <Route path="/sign-in" element={<Login />} /> */}
               {/* <Route path="/sign-up" element={<SignUp />} /> */}
-              <Route path="/profile" element={< NavBar />} />
+              <Route path="/profile" element={< Profile />} />
             </Routes>
-          </div>
-        </div>
-      </div>
+          
     </Router>
   )
 }
