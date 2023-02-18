@@ -11,7 +11,7 @@ export default function Profile() {
   
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("Hello");
+    // console.log("Hello");
     const user = JSON.parse(localStorage.getItem('Uname'));
     console.log(user);
     setUserdata(user);
@@ -26,7 +26,7 @@ export default function Profile() {
         body: JSON.stringify(user)
         }).then((res) => {
           res.json().then((data) => {
-            console.log(data);
+            // console.log(data);
             console.log(userData);
           })
         });
@@ -66,7 +66,7 @@ export default function Profile() {
         <div class="mt-5 text-center">
 
           <h4 class="mb-0">{userData.username}</h4>
-          <span class="text-muted d-block mb-2">Los Angeles</span>
+          {/* <span class="text-muted d-block mb-2">Los Angeles</span> */}
 
           {/* <button class="btn btn-primary btn-sm follow">Follow</button> */}
 
@@ -82,7 +82,7 @@ export default function Profile() {
 
             <div class="stats">
               <h6 class="mb-0">Age</h6>
-              <span>20</span>
+              <span>{userData.age}</span>
 
             </div>
 
@@ -119,7 +119,7 @@ export default function Profile() {
                 </div>}
                 <form onSubmit={(e) => {
       e.preventDefault();
-      console.log("Hi");
+      // console.log("Hi");
       // return <Navigate to="/profile" />;
       navigate("/");
     }}>

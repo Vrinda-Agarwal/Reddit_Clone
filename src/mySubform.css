@@ -1,0 +1,7 @@
+.btn-Display{
+    display:flex;
+    flex-direction: column;
+    width:30%;
+    /* text-align: center; */
+    margin: auto;
+}

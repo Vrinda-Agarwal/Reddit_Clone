@@ -7,11 +7,12 @@ import Login from './logincomponent.js'
 import SignUp from './signupcomponent.js'
 import Profile from './Profile.js'
 import NavBar from './navbar.js'
+import OpenFormButton from './mysubgreddit';
 // import './user_profie.css'
 
 function App() {
   const[flag,setflag]=useState(0);
-  console.log(flag)
+  // console.log(flag)
   return (
     <Router>
       
@@ -20,7 +21,9 @@ function App() {
               {/* <Route path="/sign-in" element={<Login />} /> */}
               {/* <Route path="/sign-up" element={<SignUp />} /> */}
               <Route path="/profile" element={< Profile />} />
+              <Route path='/mysubgreddits' element ={<OpenFormButton/>}/>
             </Routes>
+    
           
     </Router>
   )

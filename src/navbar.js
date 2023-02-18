@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css'
+import OpenFormButton from './mysubgreddit';
 function NavBar() {
+  // const[flag,setflag]=useState(0); //make pages for all of them then add their tags
   return (
     <nav className="navbar navbar-expand-lg navbar-light fixed-top">
       <ul>
@@ -10,7 +12,7 @@ function NavBar() {
           <Link to="/profile">Profile</Link>
         </li>
         <li>
-          <Link to="/mySubGreddits">My SubGreddits</Link>
+          <Link to="/mysubgreddits">My SubGreddits</Link>
         </li>
         <li>
           <Link to="/subGreddits">SubGreddits</Link>

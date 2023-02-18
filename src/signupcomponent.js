@@ -16,7 +16,7 @@ export default function SignUp({ setflag }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // const{fname,lname,username,email,contactno,age,password}=this.state;
-    console.log(fname, lname, username, email, contactno, age, password);
+    // console.log(fname, lname, username, email, contactno, age, password);
     fetch("http://localhost:3001/register", {
       method: "POST",
       crossDomain: "True",
@@ -36,7 +36,7 @@ export default function SignUp({ setflag }) {
       })
     })
       .then(response => {
-        console.log("hiii")
+        // console.log("hiii")
         return response.json()
       })
       .then((data) => {

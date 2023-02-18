@@ -13,13 +13,13 @@ export default function Login({ setflag }) {
 
   const handleSubmit = Event => {
     console.log('username', username);
-    console.log('password', password);
+    // console.log('password', password);
     // updateUsername('');
     // updatePassword('');
   }
 
   useEffect(() => {
-    console.log("Hello");
+    // console.log("Hello");
   }, []);
 
   return (<>
@@ -57,7 +57,7 @@ export default function Login({ setflag }) {
       <form onSubmit={(e) => {
         handleSubmit();
         e.preventDefault();
-        console.log(username, password);
+        // console.log(username, password);
         
         fetch("http://localhost:3001/login", {
           method: "POST",
@@ -76,7 +76,7 @@ export default function Login({ setflag }) {
             console.log(data);
             if(data.message==="Logged In")
             {
-              console.log(data.user)
+              // console.log(data.user)
 
               localStorage.setItem('Uname',JSON.stringify(data.user))
               navigate("/profile")
