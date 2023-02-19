@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from 'react'
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import "./mySubform.css"
 function FormComponent(props) {
     const [userData, setUserdata] = useState('');
@@ -63,13 +65,13 @@ function FormComponent(props) {
                 <input
                     type="text"
                     placeholder="Enter Tags"
-                    onChange={event => setTags(event.target.value)}
+                    onChange={event => setTags(event.target.value.split(","))}
                 />
                 <label>Banned Keywords</label>
                 <input
                     type="text"
                     placeholder="Enter Banned Keywords"
-                    onChange={event => setbannedKeywords(event.target.value)}
+                    onChange={event => setbannedKeywords(event.target.value.split(","))}
                 />
                 <button type="submit" disabled={!name || !description}>
                     Submit
