@@ -8,6 +8,8 @@ import SignUp from './signupcomponent.js'
 import Profile from './Profile.js'
 import NavBar from './navbar.js'
 import OpenFormButton from './mysubgreddit';
+import Subgreddit from './subgreddit.js'
+import SubgredditPage from './subGredditpage.js'
 // import './user_profie.css'
 
 function App() {
@@ -22,12 +24,16 @@ function App() {
               {/* <Route path="/sign-up" element={<SignUp />} /> */}
               <Route path="/profile" element={< Profile />} />
               <Route path='/mysubgreddits' element ={<OpenFormButton/>}/>
+              <Route path ='/subgreddit' element ={<Subgreddit/>}/>
+              <Route path='/subgreddit/:subGname' element ={<SubgredditPage/>}/>
+             
             </Routes>
     
           
     </Router>
   )
 }
+ //subGname is a nalogus to my e.Name
 // function Appp() {
 //   return (
 //     <Router>

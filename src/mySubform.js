@@ -18,7 +18,7 @@ function FormComponent(props) {
         setUserdata(user);
     }, []);
     return (
-        <div >
+        <div className="form-popup">
             <form
                 onSubmit={(e) => {
                     handleSubmit();

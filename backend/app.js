@@ -36,10 +36,11 @@ require("./userDetails");
 // const User=mongoose.model("UserInfo");
 // const User = require('./userDetails')
 const User = require("./userDetails.js")
-
+const Subgredditdata = require("./subGredditdetails.js");
+const { useEffect } = require("react");
 app.post("/register", async (req, res) => {
     const { fname, lname, email, age, username, contactno, password } = req.body;
-    console.log(req.body)
+    // console.log(req.body)
     // const encryptedpassword =  bcrypt.hash(password, 12);
     // console.log(encryptedpassword);
     try {
@@ -60,7 +61,7 @@ app.post("/register", async (req, res) => {
         })
         new_user.save()
             .then((response) => {
-                console.log("hiii");
+                // console.log("hiii");
                 res.send({ message: 1 });
             })
         // await User.create({ //creating user in MongoDB
@@ -77,26 +78,126 @@ app.post("/register", async (req, res) => {
     }
     catch (error) {
         res.send({ status: "error" });
-        console.log('errorrrr')
+        // console.log('errorrrr')
     }
 })
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
-    console.log(req.body)
-    const user = await User.findOne({ username:username });
-    console.log(user);
+    // console.log(req.body)
+    const user = await User.findOne({ username: username });
+    // console.log(user);
     if (!user) {
         return res.status(401).json({ message: "Wrong Username" });
     }
-    else{
-        if(user.password===password){
+    else {
+        if (user.password === password) {
             // console.log("HIJKJHK")
-            return res.status(200).json({ message: "Logged In" });
-
+            return res.status(200).json({ message: "Logged In", user: user });
+            // res.send(user);
         }
-        else{
+        else {
             return res.status(401).json({ message: "Password Incorrect,Try Again!" });
         }
+    }
+
+})
+
+app.post("/getuserdata", async (req, res) => {
+    const { username } = req.body;
+    console.log(req.body)
+    const user = await User.findOne({ username: username });
+    console.log(user);
+    res.json(user)
+})
+
+app.post("/subGredditentry", async (req, res) => {
+    const { Name, Description, bannedKeywords, Tags, moderator } = req.body;
+    try {
+        const oldUser = await Subgredditdata.findOne({ Name: Name });
+        if (oldUser) {
+            return res.send({ error: "Name already Exists!" })
+
+        }
+        const new_subGreddit = new Subgredditdata({
+            moderator: req.body.userData.username,
+            Name: req.body.name,
+            Description: req.body.description,
+            bannedKeywords: req.body.bannedKeywords,
+            Tags: req.body.tags,
+        })
+        new_subGreddit.save()
+            .then((response) => {
+                // console.log("hiii");
+                res.send({ message: 1 });
+            })
+    }
+    catch (error) {
+        res.send({ status: "error" });
+        // console.log('errorrrr')
+    }
+})
+
+app.post("/getmysubgreddits", async (req, res) => {
+    // const { Name, Description, bannedKeywords, Tags, moderator } = req.body;
+    try {
+        
+        // const temp=user.username
+        const user=req.body.user
+        const subarray = await Subgredditdata.find({ moderator: user.username});
+        console.log(subarray);
+        res.send({subarray: subarray});
+    }
+    catch (error) {
+        console.log("error",error);
+        res.send({ status: "error" });
+        // console.log('errorrrr')
+    }
+
+})
+app.post("/getsubgreddits", async (req, res) => {
+    try {
+        // const user=req.body.user
+        const subarray = await Subgredditdata.find({});
+        console.log(subarray);
+        
+        res.send({subarray: subarray});
+    }
+    catch (error) {
+        console.log("error",error);
+        res.send({ status: "error" });
+    }
+
+})
+app.post("/postentry", async (req, res) => {
+    const { name,description,author } = req.body;
+    try {
+        const new_Post = new Postsdata({
+            name:Name,
+            description:Description,
+            author:Author,
+        })
+        new_Post.save()
+            .then((response) => {
+                // console.log("hiii");
+                res.send({ message: "Post Created!" });
+            })
+    }
+    catch (error) {
+        res.send({ status: "error" });
+        // console.log('errorrrr')
+    }
+})
+app.post("/displaysub", async (req, res) => {
+    try {
+        const user=req.body.subG;
+        const subarray = await Subgredditdata.find({ Name:user});
+        console.log(subarray);
+        res.send({subarray: subarray});
+    }
+    catch (error) {
+        console.log("error",error);
+        res.send({ status: "error" });
+        // console.log('errorrrr')
     }
 
 })
