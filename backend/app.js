@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-
 const mongoose = require("mongoose");
 const mongoURL = "mongodb+srv://admin:admin@cluster0.psedkhp.mongodb.net/?retryWrites=true&w=majority"
 mongoose.set("strictQuery", false);
@@ -37,6 +36,7 @@ require("./userDetails");
 // const User = require('./userDetails')
 const User = require("./userDetails.js")
 const Subgredditdata = require("./subGredditdetails.js");
+const Postsdata = require("./postdetails.js")
 const { useEffect } = require("react");
 app.post("/register", async (req, res) => {
     const { fname, lname, email, age, username, contactno, password } = req.body;
@@ -140,15 +140,15 @@ app.post("/subGredditentry", async (req, res) => {
 app.post("/getmysubgreddits", async (req, res) => {
     // const { Name, Description, bannedKeywords, Tags, moderator } = req.body;
     try {
-        
+
         // const temp=user.username
-        const user=req.body.user
-        const subarray = await Subgredditdata.find({ moderator: user.username});
+        const user = req.body.user
+        const subarray = await Subgredditdata.find({ moderator: user.username });
         console.log(subarray);
-        res.send({subarray: subarray});
+        res.send({ subarray: subarray });
     }
     catch (error) {
-        console.log("error",error);
+        console.log("error", error);
         res.send({ status: "error" });
         // console.log('errorrrr')
     }
@@ -159,22 +159,22 @@ app.post("/getsubgreddits", async (req, res) => {
         // const user=req.body.user
         const subarray = await Subgredditdata.find({});
         console.log(subarray);
-        
-        res.send({subarray: subarray});
+
+        res.send({ subarray: subarray });
     }
     catch (error) {
-        console.log("error",error);
+        console.log("error", error);
         res.send({ status: "error" });
     }
 
 })
 app.post("/postentry", async (req, res) => {
-    const { name,description,author } = req.body;
+    // const { name,description,author } = req.body;
     try {
         const new_Post = new Postsdata({
-            name:Name,
-            description:Description,
-            author:Author,
+            Name: req.body.subGname,
+            Description: req.body.description,
+            Author: req.body.userData.username,
         })
         new_Post.save()
             .then((response) => {
@@ -189,15 +189,49 @@ app.post("/postentry", async (req, res) => {
 })
 app.post("/displaysub", async (req, res) => {
     try {
-        const user=req.body.subG;
-        const subarray = await Subgredditdata.find({ Name:user});
+        const user = req.body.subG;
+        const subarray = await Subgredditdata.find({ Name: user });
         console.log(subarray);
-        res.send({subarray: subarray});
+        res.send({ subarray: subarray });
     }
     catch (error) {
-        console.log("error",error);
+        console.log("error", error);
         res.send({ status: "error" });
         // console.log('errorrrr')
     }
 
+})
+app.post("/displayposts", async (req, res) => {
+    try {
+        const user = req.body.post;
+        const subarray = await Postsdata.find({ Name: user });
+        console.log(subarray);
+        res.send({ subarray: subarray });
+    }
+    catch (error) {
+        console.log("error", error);
+        res.send({ status: "error" });
+        // console.log('errorrrr')
+    }
+
+})
+app.post("/commententry", (req, res) => {
+    console.log('commentinggg')
+    console.log(req.body);
+    // const { name,description,author } = req.body;
+    try {
+        // const existing_Post = await Postsdata.find({ _id: req.body._id });
+        Postsdata.updateOne(
+            { _id: req.body.postid },
+            { $push: { Comments: req.body.comments } } ,
+        )
+    .then((response) => {
+        // console.log("hiii");
+        res.send({ message: "Comment Added!" });
+    })
+    }
+    catch (error) {
+    res.send({ status: "error" });
+    // console.log('errorrrr')
+}
 })

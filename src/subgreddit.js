@@ -3,10 +3,10 @@ import { useState } from 'react';
 import 'reactjs-popup/dist/index.css';
 import { useEffect } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 function Subgreddit(){
     const[subG,setsubG]=useState([]);
-    
+    const navigate=useNavigate();
     useEffect(() => {
         axios.post("http://localhost:3001/getsubgreddits",{
 
@@ -17,7 +17,13 @@ function Subgreddit(){
           console.log(arr);
         })
     }
+    
     , []);
+    const handlenavigate=(e) =>
+    { 
+      navigate(e.target.value)
+      console.log(e.target)
+    }
       return (
         <div>
         
@@ -28,7 +34,7 @@ function Subgreddit(){
             <div class="widget-post" aria-labelledby="post-header-title">
           <div class="widget-post__header">
             <h2 class="widget-post__title" id="post-header-title">
-              <i class="fa fa-pencil" aria-hidden="true"><strong><u>Name:</u></strong><br></br>{e.Name}</i>
+              <i class="fa fa-pencil" aria-hidden="true"><strong><u>Name:</u></strong><br></br>{e.Name}</i><button onClick={handlenavigate} value = {"/subgreddit/"+e.Name}> Show Posts </button>
             </h2>
           </div>
           <form id="widget-form" class="widget-post__form" name="form" aria-label="post widget">
