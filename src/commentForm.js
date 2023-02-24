@@ -1,29 +1,20 @@
 import { FunctionsOutlined } from "@mui/icons-material";
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from 'react'
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import "./mySubform.css"
 function CommentForm(props) {
     const postid = props.post;
-    console.log(postid)
+    // console.log(postid)
     const [name, updatename] = useState('');
     // const [description, updateDescription] = useState('');
     const [comments, setComments] = useState('');
-    const [userData, setUserdata] = useState('');
-    const handleSubmit = Event => {
-        console.log('username', name);
-    }
-    useEffect(() => {
-        console.log("hmf")
-        const user = JSON.parse(localStorage.getItem('Uname'));
-        console.log(user);
-        setUserdata(user);
-    }, []);
+   
+    
     function handlechanges(e) {
-        console.log("hkrf")
+        // console.log("hkrf")
         // handleSubmit();
-        e.preventDefault();
+        // e.preventDefault();
         console.log("comments");
         fetch("http://localhost:3001/commententry", {
             method: "POST",
@@ -68,7 +59,7 @@ function CommentForm(props) {
                         placeholder="Enter Comments"
                         onChange={event => setComments(event.target.value)}
                     />
-                    <button type="submit" onClick={handlechanges} >
+                    <button type="submit" onClick={(e) => handlechanges(e)} >
                         Submit
                     </button>
                 </div>

@@ -7,6 +7,9 @@ const userDetailsSchema = new mongoose.Schema({
     age:Number,
     email: String,
     password: String,
+    followers:Array,
+    following:Array,
+    SavedPosts:Array,
 },
 {
     collection:"UserInfo"

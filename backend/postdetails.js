@@ -3,8 +3,8 @@ const PostsSchema = new mongoose.Schema({
     Name:String,
     Description:String,
     Author:String,
-    Upvote:Number,
-    Downvote:Number,
+    Upvote:Array,
+    Downvote:Array,
     Comments:Array,
 },
 {

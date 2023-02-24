@@ -9,6 +9,7 @@ import axios from 'axios';
 import './mySubform.css';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { useNavigate } from 'react-router-dom';
+import navSubg from './navSubg';
 
 function OpenFormButton(props) {
   const [flag, setflag] = useState(false);
@@ -17,9 +18,9 @@ function OpenFormButton(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(window.localStorage.getItem('Uname'));
+    const user = localStorage.getItem('Uname');
     axios.post("http://localhost:3001/getmysubgreddits", {
-      user: user
+      username: user
     }).then((res) => {
       const arr = res.data.subarray
       setsubG(arr);

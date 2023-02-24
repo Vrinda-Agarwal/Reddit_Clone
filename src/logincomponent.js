@@ -78,7 +78,7 @@ export default function Login({ setflag }) {
             {
               // console.log(data.user)
 
-              localStorage.setItem('Uname',JSON.stringify(data.user))
+              localStorage.setItem('Uname',data.user.username)
               navigate("/profile")
             }
             else{

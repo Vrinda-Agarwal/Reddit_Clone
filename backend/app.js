@@ -103,10 +103,12 @@ app.post("/login", async (req, res) => {
 })
 
 app.post("/getuserdata", async (req, res) => {
+    // console.log("HIi!");
     const { username } = req.body;
-    console.log(req.body)
+    // console.log(username)
+    // console.log(req.body)
     const user = await User.findOne({ username: username });
-    console.log(user);
+    // console.log(user);
     res.json(user)
 })
 
@@ -142,9 +144,9 @@ app.post("/getmysubgreddits", async (req, res) => {
     try {
 
         // const temp=user.username
-        const user = req.body.user
-        const subarray = await Subgredditdata.find({ moderator: user.username });
-        console.log(subarray);
+        const username = req.body.username
+        const subarray = await Subgredditdata.find({ moderator: username });
+        // console.log(subarray);
         res.send({ subarray: subarray });
     }
     catch (error) {
@@ -158,7 +160,7 @@ app.post("/getsubgreddits", async (req, res) => {
     try {
         // const user=req.body.user
         const subarray = await Subgredditdata.find({});
-        console.log(subarray);
+        // console.log(subarray);
 
         res.send({ subarray: subarray });
     }
@@ -174,7 +176,7 @@ app.post("/postentry", async (req, res) => {
         const new_Post = new Postsdata({
             Name: req.body.subGname,
             Description: req.body.description,
-            Author: req.body.userData.username,
+            Author: req.body.userData,
         })
         new_Post.save()
             .then((response) => {
@@ -191,7 +193,7 @@ app.post("/displaysub", async (req, res) => {
     try {
         const user = req.body.subG;
         const subarray = await Subgredditdata.find({ Name: user });
-        console.log(subarray);
+        // console.log(subarray);
         res.send({ subarray: subarray });
     }
     catch (error) {
@@ -215,13 +217,13 @@ app.post("/displayposts", async (req, res) => {
     }
 
 })
-app.post("/commententry", (req, res) => {
-    console.log('commentinggg')
-    console.log(req.body);
+app.post("/commententry", async (req, res) => {
+    // console.log('commentinggg')
+    // console.log(req.body);
     // const { name,description,author } = req.body;
     try {
         // const existing_Post = await Postsdata.find({ _id: req.body._id });
-        Postsdata.updateOne(
+        await Postsdata.updateOne(
             { _id: req.body.postid },
             { $push: { Comments: req.body.comments } } ,
         )
@@ -235,3 +237,110 @@ app.post("/commententry", (req, res) => {
     // console.log('errorrrr')
 }
 })
+app.post("/follow", async(req, res) => {
+    const{user1,user2}=req.body;
+    // console.log(user1,user2);
+    // const { name,description,author } = req.body;
+
+    /* 
+        write the code to check whether user1 and user2 are present in the database.
+    */
+    try {
+        // const existing_Post = await Postsdata.find({ _id: req.body._id });
+        await User.updateOne(
+            { username: req.body.user1 },
+            {$push:{following:req.body.user2}},
+            // { $push: { Comments: req.body.comments } } ,
+        )
+        await User.updateOne(
+            { username: req.body.user2 },
+            {$push:{followers:req.body.user1}},
+            // { $push: { Comments: req.body.comments } } ,
+        )
+    .then((response) => {
+        // console.log("hiii");
+        res.send({ message: " Follower added" });
+    })
+    }
+    catch (error) {
+    res.send({ status: "error" });
+    // console.log('errorrrr')
+}
+})
+app.post("/upvote", async(req, res) => {
+    const{post,user}=req.body;
+    // console.log(req.body);
+    try {
+        // console.log(post);
+        console.log(req.body.postId);
+        // console.log(req.body.user)
+        await Postsdata.updateOne(
+            {_id:req.body.postId},
+            {$push:{Upvote:req.body.Username}},
+        )
+    .then((response) => {
+        // console.log("hiii");
+        res.send({ message: " Upvoted " });
+    })
+    }
+    catch (error) {
+    res.send({ status: "error" });
+    // console.log('errorrrr')
+}
+})
+app.post("/downvote", async(req, res) => {
+    const{post,user}=req.body;
+    // console.log(req.body);
+    try {
+        // console.log(req.body.postId),
+        await Postsdata.updateOne(
+            {_id:req.body.postId},
+            {$push:{Downvote:req.body.Username}} ,
+        )
+    .then((response) => {
+        // console.log("hiii");
+        res.send({ message: "Downvoted " });
+    })
+    }
+    catch (error) {
+    res.send({ status: "error" });
+    // console.log('errorrrr')
+}
+})
+app.post("/savepost", async(req, res) => {
+    // const{post}=req.body;
+    try {
+        console.log(req.body);
+        await User.updateOne(
+            {username:req.body.Username},
+            { $push: { SavedPosts:req.body.postId} } ,
+        )
+    .then((response) => {
+        // console.log("hiii");
+        res.send({ message: "Post Saved!" });
+    })
+    }
+    catch (error) {
+    res.send({ status: "error" });
+    // console.log('errorrrr')
+}
+})
+app.post("/displaysavedpost", async(req, res) => {
+    try {
+        const user = req.body.username;
+        console.log(user);
+        const subarray = await User.findOne({ username:user });
+        console.log(subarray.SavedPosts);
+        // res.send({ subarray: subarray.SavedPosts });
+        const saved =await Postsdata.findOne({_id:subarray.SavedPosts});
+        console.log(saved);
+        res.send(saved);
+
+    }
+    catch (error) {
+        console.log("error", error);
+        res.send({ status: "error" });
+        // console.log('errorrrr')
+    }
+})
+

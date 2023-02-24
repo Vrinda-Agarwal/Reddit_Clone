@@ -4,6 +4,7 @@ import 'reactjs-popup/dist/index.css';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import NavSubg from './navSubg';
 function Subgreddit(){
     const[subG,setsubG]=useState([]);
     const navigate=useNavigate();

@@ -13,8 +13,8 @@ function FormPart(props) {
         console.log('username', name);
     }
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('Uname'));
-        console.log(user);
+        const user = localStorage.getItem('Uname');
+        // console.log(user);
         setUserdata(user);
     }, []);
     return (
@@ -36,6 +36,7 @@ function FormPart(props) {
                         body: JSON.stringify({
                             userData,
                             // name,
+                            
                             description,
                             subGname,
                         })

@@ -19,7 +19,7 @@ function NavBar() {
           <Link to="/subgreddit">SubGreddits</Link>
         </li>
         <li>
-            <Link to="/savedPosts">Saved Posts</Link>
+            <Link to="/savedpost">Saved Posts</Link>
         </li>
       </ul>
     </nav>

@@ -10,6 +10,7 @@ import NavBar from './navbar.js'
 import OpenFormButton from './mysubgreddit';
 import Subgreddit from './subgreddit.js'
 import SubgredditPage from './subGredditpage.js'
+import SavePost from './savedpost'
 // import './user_profie.css'
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
               <Route path='/mysubgreddits' element ={<OpenFormButton/>}/>
               <Route path ='/subgreddit' element ={<Subgreddit/>}/>
               <Route path='/subgreddit/:subGname' element ={<SubgredditPage/>}/>
-             
+              <Route path='/savedpost' element = {<SavePost/>}/>
             </Routes>
     
           

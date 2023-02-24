@@ -12,9 +12,8 @@ export default function Profile() {
   const navigate = useNavigate();
   useEffect(() => {
     // console.log("Hello");
-    const user = JSON.parse(localStorage.getItem('Uname'));
-    console.log(user);
-    setUserdata(user);
+    const username = localStorage.getItem('Uname');
+    // console.log(user);
     fetch("http://localhost:3001/getuserdata", {
           method: "POST",
           crossDomain: "True",
@@ -23,11 +22,11 @@ export default function Profile() {
             accept: "application/json",
             "Access-Control-Allow-Origin": "*"
           },
-        body: JSON.stringify(user)
+        body: JSON.stringify({username})
         }).then((res) => {
           res.json().then((data) => {
             // console.log(data);
-            console.log(userData);
+            setUserdata(data);
           })
         });
     // username post karo
@@ -97,10 +96,11 @@ export default function Profile() {
                 </div>
                 {open1 && <div id = "abcd" >
                   <ul className="dropdown-menu.active" >
-                    <li>Vrinda</li>
+                    {/* <li>Vrinda</li>
                     <li>Aryaveer</li>
                     <li>Shruti</li>
-                    <li>Pawan</li>
+                    <li>Pawan</li> */}
+                    {userData.followers.map((value,index)=><li key={index}>{value}</li>)}
                   </ul>
                 </div>}
               </div>
@@ -112,9 +112,10 @@ export default function Profile() {
                 </div>
                 {open2 && <div id = "abcd" >
                   <ul className="dropdown-menu.active" >
-                    <li>Vrinda</li>
+                    {/* <li>Vrinda</li>
                     <li>Aryaveer</li>
-                    <li>Shruti</li>
+                    <li>Shruti</li> */}
+                    {userData.following.map((value,index)=><li key={index}>{value}</li>)}
                   </ul>
                 </div>}
                 <form onSubmit={(e) => {
