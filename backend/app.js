@@ -37,7 +37,7 @@ require("./userDetails");
 const User = require("./userDetails.js")
 const Subgredditdata = require("./subGredditdetails.js");
 const Postsdata = require("./postdetails.js")
-const { useEffect } = require("react");
+
 app.post("/register", async (req, res) => {
     const { fname, lname, email, age, username, contactno, password } = req.body;
     // console.log(req.body)
