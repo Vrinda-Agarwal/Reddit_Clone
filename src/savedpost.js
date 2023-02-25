@@ -88,8 +88,8 @@ const SavePost=()=> {
                             </h3>
                         </div>
                         {console.log(f._id)}
-                        <button type="button" onClick={() => { handleupvote(f._id, user) }}>Upvote</button><strong>{f.Upvote}</strong>
-                        <button type="button" onClick={() => { handledownvote(f._id, user) }} >Downvote</button><strong>{f.Downvote}</strong>
+                        <button type="button" onClick={() => { handleupvote(f._id, user) }}>Upvote</button><strong>{f.Upvote.length}</strong>
+                        <button type="button" onClick={() => { handledownvote(f._id, user) }} >Downvote</button><strong>{f.Downvote.length}</strong>
                         {/* <button type="button" onClick={() => {handlesavepost(f._id,user)}}>Save Post</button> */}
                         <button type="button" onClick={() => follow(user, f.Author)}>Follow</button>
                         <Popup trigger={
