@@ -15,10 +15,14 @@ function OpenFormButton(props) {
   const [flag, setflag] = useState(false);
   const [subG, setsubG] = useState([]);
   const [load, setLoad] = useState(0);
+  const[user,setUser]=useState('');
   const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     const user = localStorage.getItem('Uname');
+    setUser(user);
     axios.post("http://localhost:3001/getmysubgreddits", {
       username: user
     }).then((res) => {

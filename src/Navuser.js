@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css'
 
-function NavSubg(props) {
-    const path='/'+props.SubG + '/joiningrequests'
-    // console.log(path);
+function Navuser() {
     // const[flag,setflag]=useState(0); //make pages for all of them then add their tags
     return (
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
@@ -14,15 +12,6 @@ function NavSubg(props) {
                     <Link to="/users">Users</Link>
                 </li>
                 <li>
-                    <Link to={path}>Joining Requests</Link>
-                </li>
-                <li>
-                    <Link to="/reportedusers">Reported Posts</Link>
-                </li>
-                <li>
-                    <Link to="/stats">Stats</Link>
-                </li>
-                <li>
                     <Link to="/posts">Posts</Link>
                 </li>
             </ul>
@@ -30,4 +19,4 @@ function NavSubg(props) {
     );
 }
 
-export default NavSubg;
+export default Navuser;

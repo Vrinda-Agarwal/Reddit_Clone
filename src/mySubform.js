@@ -9,6 +9,7 @@ function FormComponent(props) {
     const [description, updateDescription] = useState('');
     const [tags, setTags] = useState('');
     const [bannedKeywords, setbannedKeywords] = useState('');
+    const[follower,setFollower]=useState('');
     const handleSubmit = Event => {
         console.log('username', name);
     }
@@ -16,6 +17,7 @@ function FormComponent(props) {
         const user = localStorage.getItem('Uname');
         // console.log(user);
         setUserdata(user);
+        setFollower(user);
     }, []);
     return (
         <div className="form-popup">
@@ -38,7 +40,8 @@ function FormComponent(props) {
                             name,
                             description,
                             tags,
-                            bannedKeywords
+                            bannedKeywords,
+                            follower,
                         })
                     }).then((res) => {
                         res.json().then((data) => {

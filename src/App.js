@@ -11,6 +11,7 @@ import OpenFormButton from './mysubgreddit';
 import Subgreddit from './subgreddit.js'
 import SubgredditPage from './subGredditpage.js'
 import SavePost from './savedpost'
+import Joinrequests from './joinrequest.js'
 // import './user_profie.css'
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
               <Route path ='/subgreddit' element ={<Subgreddit/>}/>
               <Route path='/subgreddit/:subGname' element ={<SubgredditPage/>}/>
               <Route path='/savedpost' element = {<SavePost/>}/>
+              <Route path='/:subGname/joiningrequests' element = {<Joinrequests/>}/>
             </Routes>
     
           

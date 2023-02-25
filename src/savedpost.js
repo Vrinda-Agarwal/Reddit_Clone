@@ -12,19 +12,16 @@ const SavePost=()=> {
     const [user, setUser] = useState(0);
     const [flag, setflag] = useState(0);
     const [flag1, setflag1] = useState(0);
-    const [post, setPost] = useState([]);
+    const [savedPosts, setSavedPosts] = useState([]);
     const [done, setdone] = useState(false);
     useEffect(() => {
         setUser(localStorage.getItem('Uname'));
         axios.post("http://localhost:3001/displaysavedpost", {
             username: localStorage.getItem('Uname')
         }).then((res) => {
-            // const arr1 = res.data.subarray;
-            console.log(res&&res.data);
-            setPost(res&&res.data);
-            console.log(res&&res.data)
+            
             setdone(true)
-            // console.log(res?.data)
+            setSavedPosts(res.data);
         })
     }, []);
     function handleupvote(postId, Username) {
@@ -36,6 +33,8 @@ const SavePost=()=> {
                 Username: Username,
             }
         ).then((res) => {
+
+            
             setupvote(res);
             // console.log(res);
         })
@@ -69,7 +68,7 @@ const SavePost=()=> {
     }
     return (
         done?
-        Object.values(post).map((f) => {
+        savedPosts.map((f) => {
             console.log("hinfejnfhjbe");
             console.log(f);
             return (

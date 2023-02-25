@@ -113,7 +113,7 @@ app.post("/getuserdata", async (req, res) => {
 })
 
 app.post("/subGredditentry", async (req, res) => {
-    const { Name, Description, bannedKeywords, Tags, moderator } = req.body;
+    const { Name, Description, bannedKeywords, Tags, moderator ,follower} = req.body;
     try {
         const oldUser = await Subgredditdata.findOne({ Name: Name });
         if (oldUser) {
@@ -121,13 +121,19 @@ app.post("/subGredditentry", async (req, res) => {
 
         }
         const new_subGreddit = new Subgredditdata({
-            moderator: req.body.userData.username,
+            moderator: req.body.userData,
             Name: req.body.name,
             Description: req.body.description,
             bannedKeywords: req.body.bannedKeywords,
             Tags: req.body.tags,
+            Followers:[req.body.userData],
         })
         new_subGreddit.save()
+        await Postsdata.updateOne(
+            { Name: req.body.name },
+            { $push: { Comments: req.body.comments } } ,
+        )
+
             .then((response) => {
                 // console.log("hiii");
                 res.send({ message: 1 });
@@ -144,7 +150,7 @@ app.post("/getmysubgreddits", async (req, res) => {
     try {
 
         // const temp=user.username
-        const username = req.body.username
+        const username = req.body.username;
         const subarray = await Subgredditdata.find({ moderator: username });
         // console.log(subarray);
         res.send({ subarray: subarray });
@@ -192,9 +198,11 @@ app.post("/postentry", async (req, res) => {
 app.post("/displaysub", async (req, res) => {
     try {
         const user = req.body.subG;
+        // console.log(req.body);
         const subarray = await Subgredditdata.find({ Name: user });
         // console.log(subarray);
         res.send({ subarray: subarray });
+        // console.log("hiiiii")
     }
     catch (error) {
         console.log("error", error);
@@ -207,7 +215,7 @@ app.post("/displayposts", async (req, res) => {
     try {
         const user = req.body.post;
         const subarray = await Postsdata.find({ Name: user });
-        console.log(subarray);
+        // console.log(subarray);
         res.send({ subarray: subarray });
     }
     catch (error) {
@@ -241,10 +249,6 @@ app.post("/follow", async(req, res) => {
     const{user1,user2}=req.body;
     // console.log(user1,user2);
     // const { name,description,author } = req.body;
-
-    /* 
-        write the code to check whether user1 and user2 are present in the database.
-    */
     try {
         // const existing_Post = await Postsdata.find({ _id: req.body._id });
         await User.updateOne(
@@ -272,7 +276,7 @@ app.post("/upvote", async(req, res) => {
     // console.log(req.body);
     try {
         // console.log(post);
-        console.log(req.body.postId);
+        // console.log(req.body.postId);
         // console.log(req.body.user)
         await Postsdata.updateOne(
             {_id:req.body.postId},
@@ -310,7 +314,7 @@ app.post("/downvote", async(req, res) => {
 app.post("/savepost", async(req, res) => {
     // const{post}=req.body;
     try {
-        console.log(req.body);
+        // console.log(req.body);
         await User.updateOne(
             {username:req.body.Username},
             { $push: { SavedPosts:req.body.postId} } ,
@@ -327,13 +331,13 @@ app.post("/savepost", async(req, res) => {
 })
 app.post("/displaysavedpost", async(req, res) => {
     try {
-        const user = req.body.username;
-        console.log(user);
-        const subarray = await User.findOne({ username:user });
-        console.log(subarray.SavedPosts);
-        // res.send({ subarray: subarray.SavedPosts });
-        const saved =await Postsdata.findOne({_id:subarray.SavedPosts});
-        console.log(saved);
+        const username = req.body.username;
+        // console.log(user);
+        const user = await User.findOne({ username:username });
+    
+        // console.log(user.SavedPosts);
+        const saved = await Postsdata.find({ _id: { $in: user.SavedPosts} });
+        // console.log(saved);
         res.send(saved);
 
     }
@@ -343,4 +347,117 @@ app.post("/displaysavedpost", async(req, res) => {
         // console.log('errorrrr')
     }
 })
+app.post("/followsubg", async(req, res) => {
+    const{user1,subg}=req.body;
+    // console.log(user1,user2);
+        const array=await Subgredditdata.updateOne(
+            { Name: req.body.subg ,Followers:{$nin :req.body.user1 }},
+            {$push:{Joinrequests:req.body.user1}}
+            );
+
+        // console.log(array);    
+        
+        if(array.modifiedCount===0){
+            res.send('User request already exists')
+        }
+        else{
+            res.send("User added to join request:")
+            // console.log(array);
+        }
+})
+app.post("/checkmodsubg", async(req, res) => {
+        // console.log(req.body);
+        const array=await Subgredditdata.findOne({
+            $and: [
+                { moderator: req.body.username},
+                { Name:req.body.subG},
+              ],
+            
+            })
+            if (!array) {
+                // console.log("HIJKJHK");
+                res.send({ message: 0 });
+                // res.send(user);
+            }
+            else{
+                res.send({message:1});
+            }
+})
+app.post("/displaysubjoin", async (req, res) => {
+    try {
+        const user = req.body.subG;
+        // console.log("hiiiii");
+        // console.log(req.body);
+        const subarray = await Subgredditdata.findOne({ Name: user });
+        // console.log(subarray);
+        res.send(subarray);
+        // console.log("hiiiii")
+    }
+    catch (error) {
+        console.log("error", error);
+        res.send({ status: "error" });
+        // console.log('errorrrr')
+    }
+
+})
+app.post("/accept", async (req, res) => {
+        console.log("HIIIII");
+        const username=req.body.user;
+        const subGName=req.body.subG;
+        console.log(req.body);
+        // find sub greddit object using it's name
+        // find if username is present in joinrequest
+        // remove that username from joint request and add it to followers
+        const subGObject=await Subgredditdata.findOne({Name:subGName});
+        console.log(subGObject);
+        const result=subGObject.Joinrequests.includes(username)//returns boolean
+        console.log(result);
+        if(result){
+            await Subgredditdata.updateOne(
+                { Name: subGName },
+                {
+                    $pull:{Joinrequests:username},
+                    $push:{Followers:username}
+                }   
+            );
+            res.send("Follow request acccepted");
+        }
+        else{
+            res.send("Follow request not sent");
+        }
+    
+}
+)
+app.post("/reject", async (req, res) => {
+        console.log("HIIIII");
+        const username=req.body.user;
+        const subGName=req.body.subG;
+        
+        console.log(req.body);
+        // find sub greddit object using it's name
+        // find if username is present in joinrequest
+        // remove that username from joint request 
+        try{
+        const subGObject=await Subgredditdata.findOne({Name:subGName});
+        console.log(subGObject);
+        const result=subGObject.Joinrequests.includes(username)//returns boolean
+        if(result){
+            await Subgredditdata.updateOne(
+                { Name: subGName },
+                {
+                    $pull:{Joinrequests:username}
+                }   
+            );
+            res.send("Follow request rejected");
+        }
+        else{
+            res.send("Follow request doesnt exist");
+        }
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+)
+
 

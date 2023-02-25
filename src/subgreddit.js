@@ -7,8 +7,25 @@ import { useNavigate } from 'react-router-dom';
 import NavSubg from './navSubg';
 function Subgreddit(){
     const[subG,setsubG]=useState([]);
+    const[user,setUser]=useState('');
+
     const navigate=useNavigate();
+    function follow(user1, subg) {
+      // console.log(user1,user2);
+      axios.post("http://localhost:3001/followsubg",
+          {
+              user1: user1,
+              subg:subg,
+          }
+      ).then((res) => {
+  
+          console.log(res);
+      })
+  
+  }
     useEffect(() => {
+      const user = localStorage.getItem('Uname');
+      setUser(user);
         axios.post("http://localhost:3001/getsubgreddits",{
 
         }).then((res)=>{
@@ -62,6 +79,7 @@ function Subgreddit(){
               <i class="fa fa-pencil" aria-hidden="true"><strong>Moderator:</strong><br></br>{e.moderator}</i>
             </h3>
             </div>
+            <button type="button" onClick={() => follow(user, e.Name)}>Follow Subgreddit</button>
           </form>
         </div>
             )

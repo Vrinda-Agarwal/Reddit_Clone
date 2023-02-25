@@ -4,8 +4,8 @@ const subGredditsSchema = new mongoose.Schema({
     Description:String,
     bannedKeywords:Array,
     Tags:Array,
-    //followers
-    //joint requests
+    Followers:Array,
+    Joinrequests:Array,
     moderator:String,
 },
 {
